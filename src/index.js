@@ -11,6 +11,9 @@ import moment from 'moment'
 Vue.filter('dateFormat', (dataStr, pattern="YYYY-MM-DD HH:mm:ss") => {
   return moment(dataStr).format(pattern)
 })
+// // 定义全局组件 (顶部返回组件)
+// import NavBar from './components/common/NavBar.vue'
+// Vue.component('nav-bar', NavBar)
 
 // 2.1 导入 vue-resource
 import VueResource from 'vue-resource'
