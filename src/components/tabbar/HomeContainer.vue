@@ -50,7 +50,7 @@ export default {
   methods: {
     getSwipe() {
       // 获取轮播图数据的方法
-      // this.$http.get('http://').then(result => {
+      // this.$http.get('api/getswipe').then(result => {
       //   console.log(result.body);
       // })
     }
