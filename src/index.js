@@ -21,6 +21,8 @@ import VueResource from 'vue-resource'
 Vue.use(VueResource)
 // 设置请求的根路径
 // Vue.http.options.root = 'http://'
+// 全局设置 post 请求时候，表单数据数据格式组织形式 application/x-www-form-urlencoded
+// Vue.http.options.emulateJSON = true
 
 // 导入  MUI 的样式
 import './lib/mui/css/mui.min.css'

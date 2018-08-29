@@ -2,9 +2,9 @@
   <div class="cmt-container">
     <h3>发表评论</h3>
     <hr>
-    <textarea placeholder="说说你的看法(最多吐槽60字)" maxlength="60"></textarea>
+    <textarea placeholder="说说你的看法(最多吐槽60字)" maxlength="60" v-model="msg"></textarea>
 
-    <mt-button type="primary" size="large">评论</mt-button>
+    <mt-button type="primary" size="large" @click="postCommentTest">评论</mt-button>
 
     <div class="mui-card cmt-list" style="margin-bottom: 35px;">
       <ul class="mui-table-view cmt-item">
@@ -32,7 +32,7 @@ export default {
       pageIndex: 1, // 默认展示第一页数据
       // comments: [], // 所以的评论数据
       comments: [
-        // 此时测试静态数据
+        // 此时测试静态数据 key属性只是为了 v-for的key值唯一
         {
           username: "匿名用户",
           add_time: new Date(),
@@ -51,7 +51,8 @@ export default {
           content: "",
           key: 3,
         }
-      ]
+      ],
+      msg: ''  // 评论输入的内容
     }
   },
   created() {
@@ -74,6 +75,47 @@ export default {
     getMore() { // 加载更多
       this.pageIndex++
       // this.getComments()
+    },
+    postComment() { // 发表评论到服务端方法
+      // 校验是否为空内容
+      if (this.msg.trim().length === 0) {
+        return Toast('至少留下点什么吧...')
+      }
+
+      // 发表评论
+      // 参数1：请求的 url 地址
+      // 参数2：提交给服务器的数据对象 { conent: this.msg }
+      // 参数3：定义提交时候，表单中数据的格式 { emulateJSON: true }
+      this.$http
+        .post('api/postcomment/' + this.$route.params.id, {
+          content: this.msg.trim()
+        })
+        .then(result => {
+          if (result.body.status === 0) {
+            // 1. 拼接出一个评论对象
+            let cmt = {
+              user_name: '匿名用户',
+              add_time: Date.now(),
+              content: this.msg.trim()
+            }
+            this.comments.unshift(cmt)
+            this.msg = ''
+          }
+        })
+    },
+    postCommentTest() { // 本地发表评论测试
+      // 校验是否为空内容
+      if (this.msg.trim().length === 0) {
+        return Toast('至少留下点什么吧...')
+      }
+      let cmt = {
+        username: '匿名用户',
+        add_time: Date.now(),
+        content: this.msg.trim(),
+      }
+      this.comments.unshift(cmt)
+      console.log(this.comments);
+      this.msg = ''
     }
   },
   props: ["id"]
