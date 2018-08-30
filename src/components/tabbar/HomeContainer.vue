@@ -2,14 +2,7 @@
   <div>
 
     <!-- 轮播图区域 -->
-    <mt-swipe :auto="4000">
-      <!-- <mt-swipe-item v-for="item in lunbotuList" :key="item.url">
-        <img :src="item.img" alt="">
-      </mt-swipe-item> -->
-      <mt-swipe-item>1</mt-swipe-item>
-      <mt-swipe-item>2</mt-swipe-item>
-      <mt-swipe-item>3</mt-swipe-item>
-    </mt-swipe>
+    <swiper :lunbotuList="lunbotuList"></swiper>
 
     <!-- 九宫格 到 六宫格 的改造 -->
     <ul class="mui-table-view mui-grid-view mui-grid-9">
@@ -38,42 +31,49 @@
 </template>
 
 <script>
+import { Toast } from 'mint-ui'
+import swiper from '../subcomponents/swiper.vue'
+
 export default {
   data() {
     return {
-      lunbotuList: [] // 保存轮播图的数组
+      lunbotuList: [  // 保存轮播图的数组
+        {
+          img: 'src/images/b1.jpg',
+        },
+        {
+          img: 'src/images/b2.jpg'
+        },
+        {
+          img: 'src/images/b3.jpg'
+        }
+      ] 
     };
   },
   created() {
-    // this.getSwipe()
+    // this.getLunbotu()
   },
   methods: {
-    getSwipe() {
+    /* getLunbotu() {
       // 获取轮播图数据的方法
-      // this.$http.get('api/getswipe').then(result => {
-      //   console.log(result.body);
-      // })
-    }
+      this.$http.get('api/getlunbo').then(result => {
+        // console.log(result.body);
+        if (result.body.status === 0) {
+          this.lunbotuList = result.body.message
+        } else {
+          Toast('加载轮播图失败...')
+        }
+      })
+    } */
+  },
+  components: {
+    swiper
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.mint-swipe {
-  height: 200px;
 
-  .mint-swipe-item {
-    &:nth-child(1) {
-      background-color: skyblue;
-    }
-    &:nth-child(2) {
-      background-color: cadetblue;
-    }
-    &:nth-child(3) {
-      background-color: palevioletred;
-    }
-  }
-}
 
 .mui-grid-view.mui-grid-9 {
   background-color: #fff;

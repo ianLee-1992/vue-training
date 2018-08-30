@@ -5,7 +5,7 @@
     <div class="mui-card">
       <div class="mui-card-content">
         <div class="mui-card-content-inner">
-          这是一个最简单的卡片视图控件；卡片视图常用来显示完整独立的一段信息，比如一篇文章的预览图、作者信息、点赞数量等
+          <swiper :lunbotuList="lunbotu"></swiper>
         </div>
       </div>
     </div>
@@ -35,8 +35,50 @@
 </template>
 
 <script>
+// 导入轮播图组件
+import swiper from '../subcomponents/swiper.vue'
+
 export default {
-  
+  data() {
+    return {
+      id: this.$route.params.id,  // 将路由参数对象中的 id 挂载到 data上，方便调用
+      lunbotu: [ // 轮播图的数据
+        {
+          src: 'src/images/mac1.jpg'
+        },
+        {
+          src: 'src/images/mac1.jpg'
+        }
+      ]
+    }
+  },
+  created() {
+    // this.getLunbotu()
+    this.getLunbotuLocal()
+  },
+  methods: {
+    getLunbotu() {
+      this.$http
+        .get('api/getthumimages/' + this.id)
+        .then(result => {
+          if (result.body.status === 0) {
+            // 先循环轮播图数组的每一项，为 item 添加 img 属性，因为轮播图组件中，只认识 item.img
+            result.body.message.forEach(item => {
+              item.img =  item.src
+            })
+            this.lunbotu = result.body.message
+          }
+        })
+    },
+    getLunbotuLocal() {
+      this.lunbotu.forEach(item => {
+        item.img = item.src
+      })
+    }
+  },
+  components: {
+    swiper
+  }
 }
 </script>
 
