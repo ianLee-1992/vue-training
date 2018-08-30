@@ -149,7 +149,7 @@ export default {
         }
       ]
       this.list = list
-      console.log(this.list);
+      // console.log(this.list);
       
     }
 
