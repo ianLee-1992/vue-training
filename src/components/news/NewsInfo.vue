@@ -1,7 +1,6 @@
 <template>
   <div>
-    <!-- 顶部子组件区域 -->
-    <nav-bar title="新闻详情"></nav-bar>
+
     <div class="newsinfo-container">
       <!-- 大标题 -->
       <h3 class="title">{{ newsinfo.title }}</h3>
@@ -25,7 +24,6 @@
 <script>
 // 1. 导入 评论子组件
 import comment from '../subcomponents/comment.vue'
-import navbar from '../subcomponents/navBar.vue'
 
 export default {
   data() {
@@ -55,8 +53,7 @@ export default {
     }
   },
   components: { // 用来注册子组件的节点
-    'comment-box': comment,
-    'nav-bar': navbar
+    'comment-box': comment
   }
 }
 </script>
